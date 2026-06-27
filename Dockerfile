@@ -1,0 +1,24 @@
+# Base image
+FROM node:24-alpine
+
+# Enable Corepack (for pnpm)
+RUN corepack enable
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files and Prisma schema
+COPY package.json pnpm-lock.yaml prisma.config.ts ./
+COPY prisma ./prisma/
+
+# Install dependencies
+RUN pnpm_config_strict_dep_builds=false pnpm install --frozen-lockfile
+
+# Copy the rest of the app
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Default command
+CMD ["pnpm", "dev"]

@@ -1,0 +1,1 @@
+export { DynamicBreadcrumbs } from "@/app/_components/header/dynamic-breadcrumbs";
